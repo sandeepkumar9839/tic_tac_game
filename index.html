@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic_Tac</title>
+    <style>
+        table{
+            margin: 0px auto;
+            text-align: center;
+
+            border: 2px solid black;
+        }
+        table,tr,td{
+            border: 5px solid red;
+            border-collapse: collapse;
+        }
+        tr{
+            width: 150px;
+            height: 150px;
+        }
+        td{
+            width: 150px;
+            height: 150px;
+        }
+        td img{
+            width: 120px;
+            height: 120px;
+        }
+    </style>
+    <script>
+         var turn=0;  //0===0 x===1
+       var state=[2,2,2,2,2,2,2,2,2] ; //2==blank
+       var winPosition=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
+       var gamestatus=true;
+       function ontap(e,i){
+        // e===element i=index
+        if(state[i]==2 && gamestatus==true){
+            if(turn===0){
+                e.innerHTML="<img src='img/o.png'/>"
+                // e.innerHTML="0"
+                var audio= new Audio("Sound.wav");
+                audio.play();
+                turn=1;
+                state[i]=0;
+                document.getElementById("h1").innerHTML="x Player Turn";
+            }
+            else{
+                e.innerHTML="<img src='img/x.png'/>"
+                // e.innerHTML="1"
+                var audio= new Audio("Sound.wav");
+                audio.play();
+                turn=0;
+                state[i]=1;
+                document.getElementById("h1").innerHTML="O Player Turn"; 
+            }
+        }
+        console.log(state);
+        var winner= checkwin();
+        if(winner==0){
+            document.getElementById("h1").innerHTML="O player won"
+            document.getElementById("game").style.backgroundImage="url('img/gif.gif1.jpg')"
+           
+
+        }
+        else if(winner==1){
+             document.getElementById("h1").innerHTML="X player won"
+            document.getElementById("game").style.backgroundImage="url('img/gif.gif1.jpg')"
+        }
+       }
+
+       function checkwin(){
+        var win=2;
+        for(x of winPosition){
+            if(state[x[0]]==state[x[1]] && state[x[1]]== state[x[2]] && state[x[0]]!=2){
+                win=state[x[0]];
+                gamestatus=false;
+                break;
+            }
+        }
+        return win;
+       }
+    </script>
+</head>
+<body id="game">
+    <center>
+        <h1>Tic-Tac-toe</h1>
+        <h1 id="h1">O Player Turn</h1>
+    </center>
+    <table>
+        <tr>
+            <td onclick="ontap(this,0)"></td>
+            <td onclick="ontap(this,1)"></td>
+            <td onclick="ontap(this,2)"></td>
+        </tr>
+        <tr>
+            <td onclick="ontap(this,3)"></td>
+            <td onclick="ontap(this,4)"></td>
+            <td onclick="ontap(this,5)"></td>
+        </tr>
+        <tr>
+            <td onclick="ontap(this,6)"></td>
+            <td onclick="ontap(this,7)"></td>
+            <td onclick="ontap(this,8)"></td>
+        </tr>
+    </table>
+</body>
+</html>
